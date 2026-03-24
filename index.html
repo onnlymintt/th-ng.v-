@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lo-fi night drive [c vibe]</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>for thang vu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            background-color: #0c0c0c;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
-            color: #d1cfc7;
+            min-height: 100%;
+            background-color: #fcfcfc;
+            font-family: 'Inter', sans-serif;
+            color: #222;
+            overflow-x: hidden;
         }
 
         #fake-youtube {
-            position: absolute;
+            position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
             flex-direction: column;
@@ -25,309 +25,189 @@
             align-items: center;
             z-index: 999;
             cursor: pointer;
-            background-color: #090909;
+            background-color: #ffffff;
         }
         
         .thumbnail-container {
             position: relative;
-            width: 85%;
-            max-width: 500px;
+            width: 80%;
+            max-width: 550px;
             aspect-ratio: 16/9;
-            background: url('https://placehold.co/600x338/151515/d1cfc7?text=lofi+aesthetic+%5Bc+vibe%5D') center/cover;
-            border-radius: 6px;
+            background: url('https://placehold.co/600x338/e0e0e0/555555?font=inter&text=play+to+chill') center/cover;
+            border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.9);
-            transition: transform 0.5s ease, opacity 0.5s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            transition: transform 0.4s ease;
         }
 
         .thumbnail-container:hover {
-            transform: scale(1.01);
-            opacity: 0.9;
+            transform: scale(1.02);
         }
 
         .play-btn {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background-color: rgba(209, 207, 199, 0.1);
-            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(209,207,199,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .play-btn::before {
             content: '';
             border-style: solid;
-            border-width: 10px 0 10px 15px;
-            border-color: transparent transparent transparent #d1cfc7;
-            margin-left: 5px;
+            border-width: 12px 0 12px 18px;
+            border-color: transparent transparent transparent #222;
+            margin-left: 6px;
         }
 
         .video-title {
-            margin-top: 25px;
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
-            font-weight: 300;
-            opacity: 0.7;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            font-weight: 400;
+            color: #555;
             text-transform: lowercase;
         }
 
         #main-screen {
             display: none;
-            height: 100%;
-            background-color: #0f0f0f;
+            min-height: 100vh;
             flex-direction: column;
-            justify-content: flex-start;
             align-items: center;
+            padding: 60px 20px;
             position: relative;
-            padding-top: 5vh;
         }
 
-        .lofi-overlay {
-            position: absolute;
+        .noise-bg {
+            position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.2;
+            opacity: 0.3;
             pointer-events: none;
-            z-index: 1;
-        }
-
-        .night-haze {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 10% 20%, rgba(200, 10, 10, 0.03), transparent 60%);
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .overpass {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 10vh;
-            background-color: #0c0c0c;
-            opacity: 0.8;
-            z-index: 3;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 2px solid #1a1a1a;
-        }
-
-        .cassidy-sign {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 5px 15px;
-            border: 1px solid rgba(209,207,199,0.3);
-            border-radius: 4px;
-            background-color: #1a1a1a;
-            color: #d1cfc7;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 400;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            z-index: 0;
         }
 
         h1 {
-            font-size: 1.8rem;
-            color: #f1eeeb;
-            font-weight: 400;
-            z-index: 10;
-            margin-bottom: 40px;
-            margin-top: 15vh;
-            letter-spacing: 1px;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
             text-transform: lowercase;
-            text-align: center;
-            width: 90%;
-            padding: 0 10px;
+            z-index: 10;
         }
 
         .gallery {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 40px;
+            max-width: 1000px;
             z-index: 10;
-            width: 90%;
-            max-width: 600px;
-            position: relative;
+            margin-bottom: 60px;
         }
 
-        .oceanside-sign {
-            position: absolute;
-            bottom: 0px;
-            right: 0px;
-            padding: 4px 10px;
-            border: 1px solid rgba(200, 10, 10, 0.1);
-            border-radius: 2px;
-            background-color: #151515;
-            color: #d1cfc7;
-            font-size: 0.6rem;
-            letter-spacing: 1px;
-            text-transform: lowercase;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* Khung ảnh phim cổ điển mờ */
         .film-frame {
+            background-color: #111;
+            padding: 30px 15px;
             position: relative;
-            border: 1px solid #1a1a1a;
-            border-radius: 2px;
-            overflow: hidden;
-            background-color: #151515;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transition: transform 0.5s ease;
         }
 
-        /* Lỗ đục phim mờ */
         .film-frame::before, .film-frame::after {
             content: '';
             position: absolute;
             left: 0;
             width: 100%;
-            height: 10px;
-            background: linear-gradient(to right, #0a0a0a 0%, #0a0a0a 5px, transparent 5px, transparent 15px);
-            background-size: 15px 10px;
-            opacity: 0.2;
+            height: 15px;
+            background-image: radial-gradient(#fcfcfc 4px, transparent 5px);
+            background-size: 24px 15px;
+            background-position: center;
         }
 
-        .film-frame::before { top: 0; border-bottom: 1px solid #0a0a0a; }
-        .film-frame::after { bottom: 0; border-top: 1px solid #0a0a0a; }
+        .film-frame::before { top: 6px; }
+        .film-frame::after { bottom: 6px; }
 
-        .group-photo-frame {
-            width: 100%;
-            max-width: 400px;
-            height: 250px;
-        }
-
-        .group-photo-frame img {
+        .film-frame img {
+            display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.9;
-        }
-        
-        .individual-photos {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            filter: contrast(110%) saturate(90%);
         }
 
-        .solo-photo-frame {
-            width: 90px;
-            height: 110px;
+        .film-frame:hover {
+            transform: translateY(-10px) scale(1.02) !important;
+            z-index: 20;
         }
 
-        .solo-photo-frame img {
+        .pic-main { width: 380px; height: 260px; transform: rotate(-2deg); }
+        .pic-1 { width: 160px; height: 200px; transform: rotate(3deg); margin-top: 40px; }
+        .pic-2 { width: 180px; height: 220px; transform: rotate(-1deg); }
+        .pic-3 { width: 170px; height: 190px; transform: rotate(4deg); margin-top: -30px; }
+        .pic-4 { width: 150px; height: 180px; transform: rotate(-4deg); margin-top: 20px; }
+
+        .letter-section {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.9;
-        }
-
-        .hint-text {
-            color: #7a7a7a;
-            margin-top: 30px;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            text-transform: lowercase;
-            z-index: 10;
-        }
-
-        /* Khu vực viết thư cho Thắng Vũ */
-        .letter-area-container {
-            width: 90%;
-            max-width: 600px;
-            margin-top: 30px;
-            margin-bottom: 50px;
+            max-width: 500px;
             z-index: 10;
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-
-        .letter-hint {
-            color: #7a7a7a;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-transform: lowercase;
         }
 
         textarea {
             width: 100%;
-            height: 100px;
+            height: 150px;
             background-color: transparent;
-            border: 1px solid #1a1a1a;
-            border-radius: 4px;
-            color: #d1cfc7;
-            padding: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.6;
             resize: none;
-            opacity: 0.7;
             outline: none;
-            transition: border 0.3s ease;
+            padding: 10px 0;
+            transition: border-color 0.3s;
         }
 
         textarea:focus {
-            border: 1px solid #d1cfc7;
-            opacity: 1;
+            border-bottom: 1px solid #222;
         }
 
-        /* Hiệu ứng trôi chữ mới - Vệt sáng đỏ kéo dài */
-        .cheer-text-elegant {
-            position: absolute;
-            font-size: 1rem;
-            color: rgba(200, 10, 10, 0.8);
-            animation: floatFadeRed 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            pointer-events: none;
-            z-index: 100;
-            text-align: center;
-            width: max-content;
-            max-width: 280px;
+        textarea::placeholder {
+            color: #aaa;
             font-weight: 300;
-            text-transform: lowercase;
-            letter-spacing: 1px;
         }
 
-        .light-leak-effect {
+        .cheer-text-clean {
             position: absolute;
-            width: 100px;
-            height: 20px;
-            background-color: rgba(200, 10, 10, 0.1);
-            filter: blur(10px);
-            animation: floatFadeHaze 4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            font-size: 0.95rem;
+            color: #444;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: floatUpFade 4s ease-out forwards;
             pointer-events: none;
             z-index: 100;
-            opacity: 0.4;
-            border-radius: 2px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            max-width: 300px;
+            text-align: center;
         }
 
-        @keyframes floatFadeRed {
-            0% { opacity: 0; transform: translateY(10px); color: rgba(200, 10, 10, 0.6); }
-            20% { opacity: 1; transform: translateY(-20px); color: rgba(200, 10, 10, 0.9); }
-            80% { opacity: 1; transform: translateY(-60px); color: rgba(200, 10, 10, 0.6); }
-            100% { opacity: 0; transform: translateY(-80px); filter: blur(2px); color: rgba(200, 10, 10, 0.3); }
-        }
-
-        @keyframes floatFadeHaze {
-            0% { opacity: 0; transform: translateY(0) scale(0.8); }
-            50% { opacity: 0.5; transform: translateY(-50px) scale(1.1); }
-            100% { opacity: 0; transform: translateY(-100px) scale(0.8); }
+        @keyframes floatUpFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            15% { opacity: 1; transform: translateY(-15px); }
+            80% { opacity: 1; transform: translateY(-50px); }
+            100% { opacity: 0; transform: translateY(-70px); }
         }
 
         #bg-music {
@@ -341,50 +221,34 @@
         <div class="thumbnail-container">
             <div class="play-btn"></div>
         </div>
-        <div class="video-title">night drive lo-fi aesthetic [c vibe]</div>
+        <div class="video-title">nhạc chữa lành</div>
     </div>
 
     <div id="main-screen">
-        <div class="lofi-overlay"></div>
-        <div class="night-haze"></div>
+        <div class="noise-bg"></div>
         
-        <div class="overpass">
-            <div class="cassidy-sign">
-                <span>Cassidy St</span>
-                <span style="font-size: 0.5rem; opacity: 0.6;">RIGHT LANE</span>
-            </div>
-        </div>
-        
-        <h1>Gửi Thắng Vũ</h1>
+        <h1>thắng vũ</h1>
         
         <div class="gallery">
-            <div class="oceanside-sign">Oceanside City Limit</div>
-            
-            <div class="film-frame group-photo-frame">
-                <img src="https://placehold.co/400x250/1a1a1a/d1cfc7?text=Anh+Chup+Chung" alt="Anh chup chung">
+            <div class="film-frame pic-main">
+                <img src="https://placehold.co/500x350/e0e0e0/555555?text=anh+chung" alt="anh chung">
             </div>
-            
-            <div class="individual-photos">
-                <div class="film-frame solo-photo-frame">
-                    <img src="https://placehold.co/90x110/1a1a1a/d1cfc7?text=Anh+1" alt="Anh 1">
-                </div>
-                <div class="film-frame solo-photo-frame">
-                    <img src="https://placehold.co/90x110/1a1a1a/d1cfc7?text=Anh+2" alt="Anh 2">
-                </div>
-                <div class="film-frame solo-photo-frame">
-                    <img src="https://placehold.co/90x110/1a1a1a/d1cfc7?text=Anh+3" alt="Anh 3">
-                </div>
-                <div class="film-frame solo-photo-frame">
-                    <img src="https://placehold.co/90x110/1a1a1a/d1cfc7?text=Anh+4" alt="Anh 4">
-                </div>
+            <div class="film-frame pic-1">
+                <img src="https://placehold.co/200x250/e0e0e0/555555?text=anh+1" alt="anh 1">
+            </div>
+            <div class="film-frame pic-2">
+                <img src="https://placehold.co/200x250/e0e0e0/555555?text=anh+2" alt="anh 2">
+            </div>
+            <div class="film-frame pic-3">
+                <img src="https://placehold.co/200x250/e0e0e0/555555?text=anh+3" alt="anh 3">
+            </div>
+            <div class="film-frame pic-4">
+                <img src="https://placehold.co/200x250/e0e0e0/555555?text=anh+4" alt="anh 4">
             </div>
         </div>
         
-        <p class="hint-text">chạm vào màn hình</p>
-
-        <div class="letter-area-container">
-            <p class="letter-hint">chừa chỗ thy viết thư</p>
-            <textarea placeholder="nhập thư của thy vào đây..."></textarea>
+        <div class="letter-section">
+            <textarea placeholder="viết thư ở đây..."></textarea>
         </div>
 
         <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
@@ -396,34 +260,24 @@
             document.getElementById('main-screen').style.display = 'flex';
             
             const music = document.getElementById('bg-music');
-            music.volume = 0.4;
+            music.volume = 0.5;
             music.play();
         }
 
         const customMessage = "khum bít có thể giúp mài đỡ hơn chút nào khum, nhma t sẽ lun ở cạnh và mua vui cho mài";
 
         document.getElementById('main-screen').addEventListener('click', function(e) {
-            // Không tạo hiệu ứng nếu click vào textarea viết thư
             if (e.target.tagName === 'TEXTAREA') return;
 
-            // Tạo hiệu ứng chữ
             const textEl = document.createElement('div');
-            textEl.className = 'cheer-text-elegant';
+            textEl.className = 'cheer-text-clean';
             textEl.innerText = customMessage;
-            textEl.style.left = (e.clientX - 140) + 'px'; // Cân chỉnh text
-            textEl.style.top = (e.clientY - 40) + 'px';
+            textEl.style.left = (e.clientX - 150) + 'px';
+            textEl.style.top = (e.clientY - 20) + 'px';
             document.body.appendChild(textEl);
-
-            // Tạo hiệu ứng vệt sáng đỏ mờ kéo dài (haze)
-            const leakEl = document.createElement('div');
-            leakEl.className = 'light-leak-effect';
-            leakEl.style.left = (e.clientX - 50 + Math.random() * 20) + 'px';
-            leakEl.style.top = (e.clientY - 20) + 'px';
-            document.body.appendChild(leakEl);
 
             setTimeout(() => {
                 textEl.remove();
-                leakEl.remove();
             }, 4000);
         });
     </script>
