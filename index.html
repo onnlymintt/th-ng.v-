@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cheer up Thắng Vũ 💖</title>
+    <title>Cổ vũ Thắng Vũ 💖 - V2.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -22,12 +22,37 @@
             text-align: center;
             user-select: none;
             cursor: pointer;
+            position: relative;
         }
+
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+
+        /* Hiệu ứng lấp lánh lơ lửng */
+        .glitter {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            animation: glisten 5s linear infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes glisten {
+            0% { transform: translate(0, 0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(100px, 100px); opacity: 0; }
+        }
+
+        .glitter-1 { background-color: #ffd1ff; animation-delay: 0s; }
+        .glitter-2 { background-color: #fad0c4; animation-delay: 1s; }
+        .glitter-3 { background-color: #c2e9fb; animation-delay: 2s; }
+
         h1 {
             font-size: 3.5rem;
             text-shadow: 3px 3px 5px rgba(255,255,255,0.8);
@@ -35,6 +60,7 @@
             padding: 20px;
             margin-bottom: 5px;
         }
+
         p {
             font-size: 1.5rem;
             color: #57606f;
@@ -43,7 +69,40 @@
             padding: 10px 20px;
             border-radius: 20px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
         }
+
+        /* Khu vực ảnh */
+        .image-section {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            z-index: 10;
+            margin-bottom: 30px;
+        }
+
+        .image-box {
+            width: 200px;
+            height: 200px;
+            border: 5px solid white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-box:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 30px rgba(255, 107, 129, 0.2);
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Hiệu ứng khi click */
         .cheer-text {
             position: absolute;
             font-size: 1.8rem;
@@ -53,29 +112,71 @@
             pointer-events: none;
             text-shadow: 2px 2px 3px white;
             white-space: nowrap;
+            z-index: 100;
         }
+
         .balloon {
             position: absolute;
             font-size: 2.5rem;
             animation: floatUpSlow 4s ease-in-out forwards;
             pointer-events: none;
+            z-index: 100;
         }
+
         @keyframes floatUp {
             0% { opacity: 1; transform: translateY(0) scale(0.5); }
             100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
         }
+
         @keyframes floatUpSlow {
             0% { opacity: 1; transform: translateY(0) rotate(0deg); }
             100% { opacity: 0; transform: translateY(-300px) rotate(25deg); }
         }
+
+        /* Sound control */
+        #bg-music {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        #bg-music:hover {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
 
+    <div class="glitter glitter-1" style="top: 10%; left: 10%; width: 10px; height: 10px;"></div>
+    <div class="glitter glitter-2" style="top: 20%; left: 80%; width: 8px; height: 8px;"></div>
+    <div class="glitter glitter-3" style="top: 70%; left: 30%; width: 12px; height: 12px;"></div>
+    <div class="glitter glitter-1" style="top: 50%; left: 60%; width: 7px; height: 7px;"></div>
+    <div class="glitter glitter-2" style="top: 80%; left: 90%; width: 9px; height: 9px;"></div>
+
     <h1>Thắng Vũ ơi, cố lên nhé! 💖</h1>
     <p>Chạm vào màn hình để nhận năng lượng tích cực nè</p>
 
+    <div class="image-section">
+        <div class="image-box">
+            <img src="https://placehold.co/200x200/ffb6c1/ffffff?text=Ảnh 1" alt="Ảnh 1">
+        </div>
+        <div class="image-box">
+            <img src="https://placehold.co/200x200/ffd1ff/ffffff?text=Ảnh 2" alt="Ảnh 2">
+        </div>
+        <div class="image-box">
+            <img src="https://placehold.co/200x200/c2e9fb/ffffff?text=Ảnh 3" alt="Ảnh 3">
+        </div>
+    </div>
+
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop muted controls>
+        Your browser does not support the audio element.
+    </audio>
+
     <script>
+        // Các thông điệp
         const messages = [
             "Bạn làm rất tốt rồi!",
             "Đừng buồn nữa nha!",
@@ -89,9 +190,11 @@
             "Về nhà ăn ngon ngủ kỹ thui"
         ];
 
+        // Emojis hiệu ứng
         const emojis = ["🎈", "✨", "🌸", "💖", "🌟", "🎉", "🌈", "🍦", "🌻", "🍀"];
 
         document.body.addEventListener('click', function(e) {
+            // Hiệu ứng chữ
             const textEl = document.createElement('div');
             textEl.className = 'cheer-text';
             textEl.innerText = messages[Math.floor(Math.random() * messages.length)];
@@ -99,6 +202,7 @@
             textEl.style.top = (e.clientY - 20) + 'px';
             document.body.appendChild(textEl);
 
+            // Hiệu ứng bong bóng/emojis
             const emojiEl = document.createElement('div');
             emojiEl.className = 'balloon';
             emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
@@ -106,11 +210,13 @@
             emojiEl.style.top = (e.clientY - 30) + 'px';
             document.body.appendChild(emojiEl);
 
+            // Xóa hiệu ứng sau 3 giây
             setTimeout(() => {
                 textEl.remove();
                 emojiEl.remove();
             }, 3000);
         });
+
     </script>
 </body>
 </html>
