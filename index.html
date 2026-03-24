@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lofi Chill 🎵</title>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+    <title>Lofi & Chill</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&family=Playfair+Display:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Baloo 2', cursive;
+            background-color: #0d0d0d;
+            font-family: 'Montserrat', sans-serif;
             overflow: hidden;
-            background-color: #0f0f0f;
         }
 
         #fake-youtube {
@@ -23,155 +23,173 @@
             justify-content: center;
             align-items: center;
             z-index: 999;
-            color: white;
+            color: #e0e0e0;
             cursor: pointer;
+            background-color: #0a0a0a;
         }
         
         .thumbnail-container {
             position: relative;
-            width: 90%;
-            max-width: 600px;
+            width: 85%;
+            max-width: 500px;
             aspect-ratio: 16/9;
-            background: url('https://placehold.co/600x338/202020/ffffff?text=Nhac+Lofi+Chill+Giam+Stress') center/cover;
-            border-radius: 12px;
+            background: url('https://placehold.co/600x338/1a1a1a/ffffff?text=lofi+aesthetic') center/cover;
+            border-radius: 4px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            transition: transform 0.5s ease;
+        }
+
+        .thumbnail-container:hover {
+            transform: scale(1.02);
         }
 
         .play-btn {
-            width: 70px;
-            height: 50px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.2s;
-        }
-
-        .play-btn:hover {
-            background-color: #ff0000;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .play-btn::before {
             content: '';
             border-style: solid;
-            border-width: 15px 0 15px 25px;
-            border-color: transparent transparent transparent white;
+            border-width: 10px 0 10px 15px;
+            border-color: transparent transparent transparent #ffffff;
+            margin-left: 5px;
         }
 
         .video-title {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            font-weight: 500;
-            width: 90%;
-            max-width: 600px;
-            text-align: left;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            font-weight: 300;
+            opacity: 0.7;
         }
 
         #main-screen {
             display: none;
             height: 100%;
-            background: linear-gradient(120deg, #ffd1ff, #fad0c4, #c2e9fb);
-            background-size: 200% 200%;
-            animation: gradientMove 10s ease infinite;
+            background-color: #f7f5f0;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #ff6b81;
             position: relative;
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .noise-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 1;
         }
 
         h1 {
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #2c2c2c;
+            font-weight: 500;
+            font-style: italic;
             z-index: 10;
-            margin-bottom: 20px;
-            text-align: center;
-            padding: 0 10px;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
         }
 
         .gallery {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 25px;
             z-index: 10;
             width: 90%;
-            max-width: 800px;
+            max-width: 700px;
         }
 
         .group-photo {
             width: 100%;
-            max-width: 400px;
-            height: 250px;
-            border: 5px solid white;
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            max-width: 450px;
+            height: 280px;
+            border-radius: 2px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         
         .individual-photos {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 20px;
         }
 
         .solo-photo {
-            width: 120px;
+            width: 100px;
             height: 120px;
-            border: 4px solid white;
-            border-radius: 15px;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            border-radius: 2px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            filter: grayscale(20%);
         }
 
         .group-photo:hover, .solo-photo:hover {
-            transform: scale(1.05) rotate(2deg);
+            transform: translateY(-5px);
+            filter: grayscale(0%);
+        }
+
+        .hint-text {
+            color: #7a7a7a;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 10;
         }
 
         .cheer-text {
             position: absolute;
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #ff4757;
-            animation: floatUp 3.5s ease-out forwards;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #4a4a4a;
+            animation: floatFade 4s ease-out forwards;
             pointer-events: none;
-            text-shadow: 2px 2px 3px white;
             z-index: 100;
             text-align: center;
             width: max-content;
-            max-width: 350px;
-            white-space: normal;
+            max-width: 300px;
+            font-style: italic;
         }
 
-        .balloon {
+        .elegant-sparkle {
             position: absolute;
-            font-size: 2rem;
-            animation: floatUpSlow 4s ease-in-out forwards;
+            font-size: 1rem;
+            color: #d4af37;
+            animation: floatSparkle 4s ease-in-out forwards;
             pointer-events: none;
             z-index: 100;
+            opacity: 0.6;
         }
 
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(0.6); }
-            100% { opacity: 0; transform: translateY(-180px) scale(1.1); }
+        @keyframes floatFade {
+            0% { opacity: 0; transform: translateY(10px); }
+            20% { opacity: 1; transform: translateY(-20px); }
+            80% { opacity: 1; transform: translateY(-60px); }
+            100% { opacity: 0; transform: translateY(-80px); filter: blur(2px); }
         }
 
-        @keyframes floatUpSlow {
-            0% { opacity: 1; transform: translateY(0) rotate(0deg); }
-            100% { opacity: 0; transform: translateY(-300px) rotate(25deg); }
+        @keyframes floatSparkle {
+            0% { opacity: 0; transform: translateY(0) scale(0.8); }
+            50% { opacity: 0.8; transform: translateY(-50px) scale(1.2); }
+            100% { opacity: 0; transform: translateY(-100px) scale(0.8); }
         }
 
         #bg-music {
@@ -185,24 +203,26 @@
         <div class="thumbnail-container">
             <div class="play-btn"></div>
         </div>
-        <div class="video-title">Nhạc lofi chill chill xả stress sau giờ làm</div>
+        <div class="video-title">lofi aesthetic to calm your mind</div>
     </div>
 
     <div id="main-screen">
-        <h1>Bất ngờ chưa Thắng Vũ 💖</h1>
+        <div class="noise-overlay"></div>
+        
+        <h1>Gửi Thắng Vũ</h1>
         
         <div class="gallery">
-            <img class="group-photo" src="https://placehold.co/400x250/ffb6c1/ffffff?text=Anh+Chup+Chung" alt="Anh chup chung">
+            <img class="group-photo" src="https://placehold.co/450x280/dcdcdc/5a5a5a?font=playfair-display&text=Anh+Chup+Chung" alt="Anh chup chung">
             
             <div class="individual-photos">
-                <img class="solo-photo" src="https://placehold.co/120x120/ffd1ff/ffffff?text=Anh+Rieng+1" alt="Anh rieng 1">
-                <img class="solo-photo" src="https://placehold.co/120x120/c2e9fb/ffffff?text=Anh+Rieng+2" alt="Anh rieng 2">
-                <img class="solo-photo" src="https://placehold.co/120x120/fad0c4/ffffff?text=Anh+Rieng+3" alt="Anh rieng 3">
-                <img class="solo-photo" src="https://placehold.co/120x120/e0c3fc/ffffff?text=Anh+Rieng+4" alt="Anh rieng 4">
+                <img class="solo-photo" src="https://placehold.co/100x120/e8e8e8/5a5a5a?font=playfair-display&text=Anh+1" alt="Anh rieng 1">
+                <img class="solo-photo" src="https://placehold.co/100x120/dcdcdc/5a5a5a?font=playfair-display&text=Anh+2" alt="Anh rieng 2">
+                <img class="solo-photo" src="https://placehold.co/100x120/e8e8e8/5a5a5a?font=playfair-display&text=Anh+3" alt="Anh rieng 3">
+                <img class="solo-photo" src="https://placehold.co/100x120/dcdcdc/5a5a5a?font=playfair-display&text=Anh+4" alt="Anh rieng 4">
             </div>
         </div>
         
-        <p style="color: #57606f; margin-top: 20px; font-weight: bold; font-size: 1.2rem; background: rgba(255,255,255,0.6); padding: 5px 15px; border-radius: 15px;">Chạm tay vào màn hình đi nè</p>
+        <p class="hint-text">chạm vào màn hình</p>
 
         <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
     </div>
@@ -213,32 +233,32 @@
             document.getElementById('main-screen').style.display = 'flex';
             
             const music = document.getElementById('bg-music');
-            music.volume = 0.6;
+            music.volume = 0.5;
             music.play();
         }
 
-        const emojis = ["🎈", "✨", "🌸", "💖", "🌟", "🎉", "🌈", "🍦", "🌻", "🍀"];
         const customMessage = "khum bít có thể giúp mài đỡ hơn chút nào khum, nhma t sẽ lun ở cạnh và mua vui cho mài";
+        const sparkles = ["✧", "✦", "⋆", "🤍"];
 
         document.getElementById('main-screen').addEventListener('click', function(e) {
             const textEl = document.createElement('div');
             textEl.className = 'cheer-text';
             textEl.innerText = customMessage;
             textEl.style.left = (e.clientX - 150) + 'px';
-            textEl.style.top = (e.clientY - 30) + 'px';
+            textEl.style.top = (e.clientY - 40) + 'px';
             document.body.appendChild(textEl);
 
-            const emojiEl = document.createElement('div');
-            emojiEl.className = 'balloon';
-            emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            emojiEl.style.left = (e.clientX - 20 + Math.random() * 50) + 'px';
-            emojiEl.style.top = (e.clientY - 30) + 'px';
-            document.body.appendChild(emojiEl);
+            const sparkleEl = document.createElement('div');
+            sparkleEl.className = 'elegant-sparkle';
+            sparkleEl.innerText = sparkles[Math.floor(Math.random() * sparkles.length)];
+            sparkleEl.style.left = (e.clientX - 10 + Math.random() * 20) + 'px';
+            sparkleEl.style.top = (e.clientY - 20) + 'px';
+            document.body.appendChild(sparkleEl);
 
             setTimeout(() => {
                 textEl.remove();
-                emojiEl.remove();
-            }, 3500);
+                sparkleEl.remove();
+            }, 4000);
         });
     </script>
 </body>
