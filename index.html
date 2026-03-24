@@ -153,25 +153,26 @@
         .empathy-text {
             position: absolute;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-style: italic;
-            color: #94a3b8;
+            color: #e2e8f0;
             opacity: 0;
             transition: opacity 2s ease 1s;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8);
             white-space: nowrap;
-            z-index: 1;
+            z-index: 10; /* Đưa chữ lên trên cùng để không bị ảnh che */
         }
 
         .story-layer.active .empathy-text {
-            opacity: 0.7;
+            opacity: 0.85;
             animation: floatGently 4s infinite alternate ease-in-out;
         }
 
+        /* Chỉnh lại vị trí để vắt ngang qua mép ảnh */
         .pos-1 { top: 15%; left: 10%; }
-        .pos-2 { bottom: 20%; right: 10%; }
-        .pos-3 { top: 20%; right: 15%; }
-        .pos-4 { bottom: 15%; left: 15%; }
+        .pos-2 { bottom: 15%; right: 10%; }
+        .pos-3 { top: 20%; right: 5%; }
+        .pos-4 { bottom: 12%; left: 8%; }
         .pos-5 { top: 12%; left: 50%; transform: translateX(-50%); }
 
         @keyframes floatGently {
@@ -183,7 +184,7 @@
             width: 80%;
             max-width: 600px;
             text-align: center;
-            z-index: 3;
+            z-index: 10;
         }
 
         .letter-text {
@@ -234,10 +235,11 @@
             100% { width: 150px; height: 150px; opacity: 0; }
         }
 
+        /* Hiệu ứng kết màn */
         .ending-glow {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(226, 232, 240, 0.15), transparent 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(200, 150, 100, 0.15), transparent 60%);
             opacity: 0;
             pointer-events: none;
             z-index: 1;
@@ -251,7 +253,32 @@
 
         @keyframes cinematicGlow {
             0% { transform: scale(0.8); }
-            100% { transform: scale(1.2); }
+            100% { transform: scale(1.1); }
+        }
+
+        #particle-container {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .firefly {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background-color: #fef08a;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fef08a, 0 0 20px #eab308;
+            opacity: 0;
+            animation: flyAround 6s infinite alternate ease-in-out;
+        }
+
+        @keyframes flyAround {
+            0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.6; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(1.5); opacity: 0; }
         }
 
         #bg-music {
@@ -264,6 +291,7 @@
     <div class="ambient-lights"></div>
     <div class="film-grain"></div>
     <div class="ending-glow" id="final-glow"></div>
+    <div id="particle-container"></div>
 
     <div id="intro-screen" onclick="startExperience()">
         <div class="play-circle">
@@ -279,35 +307,35 @@
         </div>
 
         <div class="story-layer" id="step-1">
-            <div class="empathy-text pos-1"> being maknae is hard </div>
+            <div class="empathy-text pos-1">làm người lớn thật khó ha</div>
             <div class="photo-container">
                 <img src="rieng1.JPG" alt="anh 1">
             </div>
         </div>
 
         <div class="story-layer" id="step-2">
-            <div class="empathy-text pos-2"> being an adult is hard </div>
+            <div class="empathy-text pos-2"> being a maknae is hard </div>
             <div class="photo-container">
                 <img src="rieng2.JPG" alt="anh 2">
             </div>
         </div>
 
         <div class="story-layer" id="step-3">
-            <div class="empathy-text pos-3"> being "thắng vũ" is hard </div>
+            <div class="empathy-text pos-3"> being an adult is hard </div>
             <div class="photo-container">
                 <img src="rieng3.JPG" alt="anh 3">
             </div>
         </div>
 
         <div class="story-layer" id="step-4">
-            <div class="empathy-text pos-4"> nhưng mà.... thắng vũ luôn có ... </div>
+            <div class="empathy-text pos-4"> being "thắng vũ" is hard </div>
             <div class="photo-container">
                 <img src="rieng4.JPG" alt="anh 4">
             </div>
         </div>
 
         <div class="story-layer" id="step-5">
-            <div class="empathy-text pos-5"> có thằng minh tiến ở đâyyy </div>
+            <div class="empathy-text pos-5">nhma.... m luôn có thằng minh tiến ở đâyyyy </div>
             <div class="photo-container">
                 <img src="chung.JPG" alt="anh chung">
             </div>
@@ -353,6 +381,28 @@
             }, 1500);
         }
 
+        function createFireflies() {
+            const container = document.getElementById('particle-container');
+            for(let i = 0; i < 40; i++) {
+                let firefly = document.createElement('div');
+                firefly.className = 'firefly';
+                
+                // Random vị trí bắt đầu
+                firefly.style.left = Math.random() * 100 + 'vw';
+                firefly.style.top = Math.random() * 100 + 'vh';
+                
+                // Random hướng bay
+                firefly.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
+                firefly.style.setProperty('--dy', (Math.random() * -200 - 50) + 'px');
+                
+                // Random thời gian trễ để đom đóm hiện ra không cùng lúc
+                firefly.style.animationDelay = (Math.random() * 4) + 's';
+                firefly.style.animationDuration = (4 + Math.random() * 4) + 's';
+                
+                container.appendChild(firefly);
+            }
+        }
+
         function nextStep() {
             if (isTransitioning) return;
             
@@ -380,6 +430,7 @@
                 if (currentStep === totalSteps - 1) {
                     document.getElementById('nav-hint').classList.remove('visible');
                     document.getElementById('final-glow').classList.add('active');
+                    createFireflies(); // Gọi hiệu ứng đom đóm kết màn
                 }
             }, 100);
         }
