@@ -4,45 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lonely city walk</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
             padding: 0;
-            min-height: 100%;
-            background-color: #020617;
-            font-family: 'Caveat', cursive;
-            color: #cbd5e1;
-            overflow-x: hidden;
+            height: 100%;
+            background-color: #03050a;
+            font-family: 'Cormorant Garamond', serif;
+            color: #e2e8f0;
+            overflow: hidden;
+            user-select: none;
         }
 
-        .city-lights {
+        .ambient-lights {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: 
-                radial-gradient(circle at 15% 50%, rgba(220, 38, 38, 0.08), transparent 40%),
-                radial-gradient(circle at 85% 30%, rgba(37, 99, 235, 0.1), transparent 50%),
-                radial-gradient(circle at 50% 80%, rgba(220, 38, 38, 0.05), transparent 40%);
+                radial-gradient(circle at 20% 30%, rgba(153, 27, 27, 0.08), transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(30, 58, 138, 0.1), transparent 50%);
             z-index: 0;
             pointer-events: none;
-            animation: breathe 8s infinite alternate ease-in-out;
+            animation: pulse 6s infinite alternate ease-in-out;
         }
 
-        .rain-overlay {
+        .film-grain {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.15;
+            opacity: 0.2;
             z-index: 1;
             pointer-events: none;
         }
 
-        @keyframes breathe {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.1); opacity: 1; }
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
         }
 
-        #fake-youtube {
+        #intro-screen {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
@@ -51,168 +51,155 @@
             align-items: center;
             z-index: 999;
             cursor: pointer;
-            background-color: #020617;
-        }
-        
-        .thumbnail-container {
-            position: relative;
-            width: 80%;
-            max-width: 500px;
-            aspect-ratio: 16/9;
-            background: linear-gradient(to bottom, #0f172a, #450a0a);
-            border-radius: 4px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            transition: opacity 0.4s ease;
-            border: 1px solid rgba(220, 38, 38, 0.2);
+            background-color: #03050a;
+            transition: opacity 1.5s ease;
         }
 
-        .thumbnail-container:hover {
-            opacity: 0.8;
-        }
-
-        .play-btn {
-            width: 60px;
-            height: 60px;
+        .play-circle {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background-color: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(220, 38, 38, 0.3);
+            transition: all 0.5s ease;
+            box-shadow: 0 0 30px rgba(153, 27, 27, 0.1);
         }
 
-        .play-btn::before {
-            content: '';
+        .play-circle:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(153, 27, 27, 0.3);
+        }
+
+        .play-triangle {
+            width: 0;
+            height: 0;
             border-style: solid;
-            border-width: 10px 0 10px 15px;
-            border-color: transparent transparent transparent #94a3b8;
-            margin-left: 5px;
+            border-width: 8px 0 8px 12px;
+            border-color: transparent transparent transparent #cbd5e1;
+            margin-left: 4px;
         }
 
-        .video-title {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            letter-spacing: 2px;
+        .intro-text {
+            margin-top: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
             color: #64748b;
             text-transform: lowercase;
+            font-weight: 200;
         }
 
-        #main-screen {
+        #story-screen {
             display: none;
-            min-height: 100vh;
-            flex-direction: column;
-            align-items: center;
-            padding: 80px 20px;
+            height: 100vh;
+            width: 100vw;
             position: relative;
             z-index: 10;
+            cursor: pointer;
         }
 
-        h1 {
-            font-size: 3rem;
-            letter-spacing: 2px;
-            margin-bottom: 60px;
-            text-transform: lowercase;
-            color: #94a3b8;
-            font-weight: 400;
-        }
-
-        .gallery {
+        .story-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            max-width: 800px;
-            margin-bottom: 70px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            pointer-events: none;
         }
 
-        .film-frame {
-            background-color: #0f172a;
-            padding: 15px 8px;
+        .story-layer.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .story-layer.fade-out {
+            opacity: 0;
+            transform: scale(1.05);
+        }
+
+        .title-text {
+            font-size: 4rem;
+            font-style: italic;
+            letter-spacing: 2px;
+            color: #e2e8f0;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .photo-container {
             position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border: 1px solid rgba(220, 38, 38, 0.15);
-        }
-
-        .film-frame::before, .film-frame::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 8px;
-            background-image: radial-gradient(#020617 2px, transparent 3px);
-            background-size: 12px 8px;
-            background-position: center;
-            opacity: 0.5;
-        }
-
-        .film-frame::before { top: 3px; }
-        .film-frame::after { bottom: 3px; }
-
-        .film-frame img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(40%) contrast(120%) brightness(85%);
-            transition: filter 0.5s ease;
-        }
-
-        .film-frame:hover {
-            transform: translateY(-5px) scale(1.02);
-            z-index: 20;
-        }
-
-        .film-frame:hover img {
-            filter: grayscale(0%) contrast(110%) brightness(100%);
-        }
-
-        .pic-main { width: 320px; height: 200px; transform: rotate(-1deg); }
-        .pic-1 { width: 140px; height: 180px; transform: rotate(2deg); margin-top: 20px; }
-        .pic-2 { width: 150px; height: 190px; transform: rotate(-2deg); }
-        .pic-3 { width: 140px; height: 170px; transform: rotate(3deg); margin-top: -10px; }
-        .pic-4 { width: 130px; height: 160px; transform: rotate(-3deg); margin-top: 15px; }
-
-        .letter-section {
-            width: 90%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
+            padding: 10px;
             background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(8px);
-            padding: 40px 30px;
-            border-radius: 8px;
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .photo-container img {
+            max-width: 80vw;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
+            filter: grayscale(20%) contrast(110%);
+        }
+
+        .letter-container {
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
         }
 
         .letter-text {
-            width: 100%;
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             line-height: 1.6;
-            color: #cbd5e1;
-            text-align: center;
-            font-weight: 400;
+            color: #e2e8f0;
+            font-style: italic;
         }
 
-        .ripple {
+        .hint {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: #475569;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
+        }
+
+        .hint.visible {
+            opacity: 1;
+            animation: floatHint 2s infinite alternate;
+        }
+
+        @keyframes floatHint {
+            0% { transform: translate(-50%, 0); }
+            100% { transform: translate(-50%, -10px); }
+        }
+
+        .click-ripple {
             position: absolute;
-            border: 1px solid rgba(220, 38, 38, 0.4);
+            border: 1px solid rgba(153, 27, 27, 0.5);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            animation: rippleEffect 0.8s ease-out forwards;
+            animation: rippleExpand 1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
             pointer-events: none;
-            z-index: 100;
+            z-index: 9999;
         }
 
-        @keyframes rippleEffect {
-            0% { width: 0; height: 0; opacity: 1; border-width: 2px; }
-            100% { width: 80px; height: 80px; opacity: 0; border-width: 1px; }
+        @keyframes rippleExpand {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 150px; height: 150px; opacity: 0; }
         }
 
         #bg-music {
@@ -222,73 +209,137 @@
 </head>
 <body>
 
-    <div class="city-lights"></div>
-    <div class="rain-overlay"></div>
+    <div class="ambient-lights"></div>
+    <div class="film-grain"></div>
 
-    <div id="fake-youtube" onclick="startSurprise()">
-        <div class="thumbnail-container">
-            <div class="play-btn"></div>
+    <div id="intro-screen" onclick="startExperience()">
+        <div class="play-circle">
+            <div class="play-triangle"></div>
         </div>
-        <div class="video-title">night walk in the city</div>
+        <div class="intro-text">đeo tai nghe và chạm vào màn hình</div>
     </div>
 
-    <div id="main-screen">
+    <div id="story-screen">
         
-        <h1>thắng vũ</h1>
-        
-        <div class="gallery">
-            <div class="film-frame pic-main">
-                <img src="chung.JPG" alt="anh chung">
-            </div>
-            <div class="film-frame pic-1">
+        <div class="story-layer" id="step-0">
+            <div class="title-text">thắng vũ</div>
+        </div>
+
+        <div class="story-layer" id="step-1">
+            <div class="photo-container">
                 <img src="rieng1.JPG" alt="anh 1">
             </div>
-            <div class="film-frame pic-2">
+        </div>
+
+        <div class="story-layer" id="step-2">
+            <div class="photo-container">
                 <img src="rieng2.JPG" alt="anh 2">
             </div>
-            <div class="film-frame pic-3">
+        </div>
+
+        <div class="story-layer" id="step-3">
+            <div class="photo-container">
                 <img src="rieng3.JPG" alt="anh 3">
             </div>
-            <div class="film-frame pic-4">
+        </div>
+
+        <div class="story-layer" id="step-4">
+            <div class="photo-container">
                 <img src="rieng4.JPG" alt="anh 4">
             </div>
         </div>
-        
-        <div class="letter-section">
-            <div class="letter-text">
-                khum bít có thể giúp mài đỡ hơn chút nào khum, nhma t sẽ lun ở cạnh và mua vui cho mài
+
+        <div class="story-layer" id="step-5">
+            <div class="photo-container">
+                <img src="chung.JPG" alt="anh chung">
             </div>
         </div>
 
-        <audio id="bg-music" src="NGHI - City (Lyrics Visualizer).mp3" loop></audio>
+        <div class="story-layer" id="step-6">
+            <div class="letter-container">
+                <div class="letter-text">
+                    khum bít có thể giúp mài đỡ hơn chút nào khum, nhma t sẽ lun ở cạnh và mua vui cho mài
+                </div>
+            </div>
+        </div>
+
+        <div class="hint" id="nav-hint">chạm để tiếp tục</div>
     </div>
+
+    <audio id="bg-music" src="NGHI - City (Lyrics Visualizer).mp3" loop></audio>
 
     <script>
         const popSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
-        popSound.volume = 0.3;
+        popSound.volume = 0.2;
 
-        function startSurprise() {
-            document.getElementById('fake-youtube').style.display = 'none';
-            document.getElementById('main-screen').style.display = 'flex';
-            
+        let currentStep = -1;
+        const totalSteps = 7;
+        let isTransitioning = false;
+
+        function startExperience() {
+            const intro = document.getElementById('intro-screen');
+            const storyScreen = document.getElementById('story-screen');
             const music = document.getElementById('bg-music');
+            
             music.volume = 0.4;
             music.play();
+
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
+                storyScreen.style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('nav-hint').classList.add('visible');
+                }, 2000);
+                nextStep();
+            }, 1500);
         }
 
-        document.getElementById('main-screen').addEventListener('click', function(e) {
+        function nextStep() {
+            if (isTransitioning) return;
+            
+            if (currentStep >= totalSteps - 1) {
+                return;
+            }
+
+            isTransitioning = true;
+
+            if (currentStep >= 0) {
+                const oldLayer = document.getElementById('step-' + currentStep);
+                oldLayer.classList.remove('active');
+                oldLayer.classList.add('fade-out');
+            }
+
+            currentStep++;
+
+            const newLayer = document.getElementById('step-' + currentStep);
+            newLayer.classList.remove('fade-out');
+            
+            setTimeout(() => {
+                newLayer.classList.add('active');
+                isTransitioning = false;
+                
+                if (currentStep === totalSteps - 1) {
+                    document.getElementById('nav-hint').classList.remove('visible');
+                }
+            }, 100);
+        }
+
+        document.getElementById('story-screen').addEventListener('click', function(e) {
             popSound.currentTime = 0;
             popSound.play();
 
             const rippleEl = document.createElement('div');
-            rippleEl.className = 'ripple';
+            rippleEl.className = 'click-ripple';
             rippleEl.style.left = e.clientX + 'px';
             rippleEl.style.top = e.clientY + 'px';
             document.body.appendChild(rippleEl);
 
             setTimeout(() => {
                 rippleEl.remove();
-            }, 800);
+            }, 1000);
+
+            nextStep();
         });
     </script>
 </body>
