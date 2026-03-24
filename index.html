@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheer up Thắng Vũ 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(120deg, #ffd1ff, #fad0c4, #c2e9fb);
+            background-size: 200% 200%;
+            animation: gradientMove 10s ease infinite;
+            font-family: 'Baloo 2', cursive;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ff6b81;
+            text-align: center;
+            user-select: none;
+            cursor: pointer;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        h1 {
+            font-size: 3.5rem;
+            text-shadow: 3px 3px 5px rgba(255,255,255,0.8);
+            z-index: 10;
+            padding: 20px;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 1.5rem;
+            color: #57606f;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .cheer-text {
+            position: absolute;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff4757;
+            animation: floatUp 2.5s ease-out forwards;
+            pointer-events: none;
+            text-shadow: 2px 2px 3px white;
+            white-space: nowrap;
+        }
+        .balloon {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: floatUpSlow 4s ease-in-out forwards;
+            pointer-events: none;
+        }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(0.5); }
+            100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
+        }
+        @keyframes floatUpSlow {
+            0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-300px) rotate(25deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Thắng Vũ ơi, cố lên nhé! 💖</h1>
+    <p>Chạm vào màn hình để nhận năng lượng tích cực nè</p>
+
+    <script>
+        const messages = [
+            "Bạn làm rất tốt rồi!",
+            "Đừng buồn nữa nha!",
+            "Nghỉ ngơi xíu đi nè",
+            "Mọi chuyện sẽ ổn thôi",
+            "Cười lên một cái nào!",
+            "Công việc là chuyện nhỏ",
+            "Bạn siêu phàm lắm luôn",
+            "Thở phào nhẹ nhõm nha",
+            "Luôn có mọi người ở đây",
+            "Về nhà ăn ngon ngủ kỹ thui"
+        ];
+
+        const emojis = ["🎈", "✨", "🌸", "💖", "🌟", "🎉", "🌈", "🍦", "🌻", "🍀"];
+
+        document.body.addEventListener('click', function(e) {
+            const textEl = document.createElement('div');
+            textEl.className = 'cheer-text';
+            textEl.innerText = messages[Math.floor(Math.random() * messages.length)];
+            textEl.style.left = (e.clientX - 50) + 'px';
+            textEl.style.top = (e.clientY - 20) + 'px';
+            document.body.appendChild(textEl);
+
+            const emojiEl = document.createElement('div');
+            emojiEl.className = 'balloon';
+            emojiEl.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            emojiEl.style.left = (e.clientX - 20 + Math.random() * 50) + 'px';
+            emojiEl.style.top = (e.clientY - 30) + 'px';
+            document.body.appendChild(emojiEl);
+
+            setTimeout(() => {
+                textEl.remove();
+                emojiEl.remove();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
