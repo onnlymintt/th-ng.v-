@@ -139,20 +139,51 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            z-index: 2;
         }
 
         .photo-container img {
-            max-width: 80vw;
-            max-height: 70vh;
+            max-width: 75vw;
+            max-height: 65vh;
             object-fit: contain;
             display: block;
             filter: grayscale(20%) contrast(110%);
+        }
+
+        .empathy-text {
+            position: absolute;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            color: #94a3b8;
+            opacity: 0;
+            transition: opacity 2s ease 1s;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+            white-space: nowrap;
+            z-index: 1;
+        }
+
+        .story-layer.active .empathy-text {
+            opacity: 0.7;
+            animation: floatGently 4s infinite alternate ease-in-out;
+        }
+
+        .pos-1 { top: 15%; left: 10%; }
+        .pos-2 { bottom: 20%; right: 10%; }
+        .pos-3 { top: 20%; right: 15%; }
+        .pos-4 { bottom: 15%; left: 15%; }
+        .pos-5 { top: 12%; left: 50%; transform: translateX(-50%); }
+
+        @keyframes floatGently {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
 
         .letter-container {
             width: 80%;
             max-width: 600px;
             text-align: center;
+            z-index: 3;
         }
 
         .letter-text {
@@ -160,6 +191,7 @@
             line-height: 1.6;
             color: #e2e8f0;
             font-style: italic;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
 
         .hint {
@@ -202,6 +234,26 @@
             100% { width: 150px; height: 150px; opacity: 0; }
         }
 
+        .ending-glow {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(226, 232, 240, 0.15), transparent 70%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+            transition: opacity 3s ease;
+        }
+
+        .ending-glow.active {
+            opacity: 1;
+            animation: cinematicGlow 4s ease forwards;
+        }
+
+        @keyframes cinematicGlow {
+            0% { transform: scale(0.8); }
+            100% { transform: scale(1.2); }
+        }
+
         #bg-music {
             display: none;
         }
@@ -211,6 +263,7 @@
 
     <div class="ambient-lights"></div>
     <div class="film-grain"></div>
+    <div class="ending-glow" id="final-glow"></div>
 
     <div id="intro-screen" onclick="startExperience()">
         <div class="play-circle">
@@ -226,30 +279,35 @@
         </div>
 
         <div class="story-layer" id="step-1">
+            <div class="empathy-text pos-1"> being maknae is hard </div>
             <div class="photo-container">
                 <img src="rieng1.JPG" alt="anh 1">
             </div>
         </div>
 
         <div class="story-layer" id="step-2">
+            <div class="empathy-text pos-2"> being an adult is hard </div>
             <div class="photo-container">
                 <img src="rieng2.JPG" alt="anh 2">
             </div>
         </div>
 
         <div class="story-layer" id="step-3">
+            <div class="empathy-text pos-3"> being "thắng vũ" is hard </div>
             <div class="photo-container">
                 <img src="rieng3.JPG" alt="anh 3">
             </div>
         </div>
 
         <div class="story-layer" id="step-4">
+            <div class="empathy-text pos-4"> nhưng mà.... thắng vũ luôn có ... </div>
             <div class="photo-container">
                 <img src="rieng4.JPG" alt="anh 4">
             </div>
         </div>
 
         <div class="story-layer" id="step-5">
+            <div class="empathy-text pos-5"> có thằng minh tiến ở đâyyy </div>
             <div class="photo-container">
                 <img src="chung.JPG" alt="anh chung">
             </div>
@@ -258,7 +316,7 @@
         <div class="story-layer" id="step-6">
             <div class="letter-container">
                 <div class="letter-text">
-                    khum bít có thể giúp mài đỡ hơn chút nào khum, nhma t sẽ lun ở cạnh và mua vui cho mài
+                    khum bít có thể giúp mài đỡ hơn chút nào khum, nhma t sẽ lun ở cạnh và mua vui cho mài<br><br>i lov u alotttttt
                 </div>
             </div>
         </div>
@@ -321,6 +379,7 @@
                 
                 if (currentStep === totalSteps - 1) {
                     document.getElementById('nav-hint').classList.remove('visible');
+                    document.getElementById('final-glow').classList.add('active');
                 }
             }, 100);
         }
