@@ -3,17 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>for thang vu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+    <title>lonely city walk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
             padding: 0;
             min-height: 100%;
-            background: linear-gradient(135deg, #071931 0%, #0d284f 50%, #2a0a18 100%);
-            font-family: 'Dancing Script', cursive;
-            color: #fca311;
+            background-color: #020617;
+            font-family: 'Caveat', cursive;
+            color: #cbd5e1;
             overflow-x: hidden;
+        }
+
+        .city-lights {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(220, 38, 38, 0.08), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(37, 99, 235, 0.1), transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(220, 38, 38, 0.05), transparent 40%);
+            z-index: 0;
+            pointer-events: none;
+            animation: breathe 8s infinite alternate ease-in-out;
+        }
+
+        .rain-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.15;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
         }
 
         #fake-youtube {
@@ -25,56 +51,54 @@
             align-items: center;
             z-index: 999;
             cursor: pointer;
-            background-color: #030a14;
+            background-color: #020617;
         }
         
         .thumbnail-container {
             position: relative;
             width: 80%;
-            max-width: 550px;
+            max-width: 500px;
             aspect-ratio: 16/9;
-            background: linear-gradient(45deg, #071931, #780000);
-            border-radius: 8px;
+            background: linear-gradient(to bottom, #0f172a, #450a0a);
+            border-radius: 4px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 10px 40px rgba(200,0,0,0.15);
-            transition: transform 0.4s ease;
-            border: 1px solid #c1121f;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            transition: opacity 0.4s ease;
+            border: 1px solid rgba(220, 38, 38, 0.2);
         }
 
         .thumbnail-container:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 50px rgba(200,0,0,0.3);
+            opacity: 0.8;
         }
 
         .play-btn {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 2px solid #c1121f;
+            border: 1px solid rgba(220, 38, 38, 0.3);
         }
 
         .play-btn::before {
             content: '';
             border-style: solid;
-            border-width: 12px 0 12px 18px;
-            border-color: transparent transparent transparent #fca311;
-            margin-left: 6px;
+            border-width: 10px 0 10px 15px;
+            border-color: transparent transparent transparent #94a3b8;
+            margin-left: 5px;
         }
 
         .video-title {
             margin-top: 20px;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
-            color: #c1121f;
+            color: #64748b;
             text-transform: lowercase;
-            text-shadow: 0 0 10px rgba(193, 18, 31, 0.5);
         }
 
         #main-screen {
@@ -82,18 +106,18 @@
             min-height: 100vh;
             flex-direction: column;
             align-items: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             position: relative;
+            z-index: 10;
         }
 
         h1 {
-            font-size: 3.5rem;
-            letter-spacing: 3px;
-            margin-bottom: 50px;
+            font-size: 3rem;
+            letter-spacing: 2px;
+            margin-bottom: 60px;
             text-transform: lowercase;
-            z-index: 10;
-            color: #fca311;
-            text-shadow: 2px 2px 15px rgba(252, 163, 17, 0.3);
+            color: #94a3b8;
+            font-weight: 400;
         }
 
         .gallery {
@@ -101,19 +125,18 @@
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 30px;
-            max-width: 900px;
-            z-index: 10;
-            margin-bottom: 50px;
+            gap: 20px;
+            max-width: 800px;
+            margin-bottom: 70px;
         }
 
         .film-frame {
-            background-color: #450920;
-            padding: 25px 12px;
+            background-color: #0f172a;
+            padding: 15px 8px;
             position: relative;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            transition: transform 0.5s ease;
-            border: 1px solid #a53860;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border: 1px solid rgba(220, 38, 38, 0.15);
         }
 
         .film-frame::before, .film-frame::after {
@@ -121,72 +144,75 @@
             position: absolute;
             left: 0;
             width: 100%;
-            height: 12px;
-            background-image: radial-gradient(#071931 3px, transparent 4px);
-            background-size: 20px 12px;
+            height: 8px;
+            background-image: radial-gradient(#020617 2px, transparent 3px);
+            background-size: 12px 8px;
             background-position: center;
+            opacity: 0.5;
         }
 
-        .film-frame::before { top: 5px; }
-        .film-frame::after { bottom: 5px; }
+        .film-frame::before { top: 3px; }
+        .film-frame::after { bottom: 3px; }
 
         .film-frame img {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: contrast(110%) brightness(90%);
+            filter: grayscale(40%) contrast(120%) brightness(85%);
+            transition: filter 0.5s ease;
         }
 
         .film-frame:hover {
-            transform: translateY(-10px) scale(1.05) !important;
+            transform: translateY(-5px) scale(1.02);
             z-index: 20;
-            box-shadow: 0 15px 40px rgba(193, 18, 31, 0.5);
         }
 
-        .pic-main { width: 350px; height: 240px; transform: rotate(-3deg); }
-        .pic-1 { width: 150px; height: 190px; transform: rotate(4deg); margin-top: 30px; }
-        .pic-2 { width: 160px; height: 210px; transform: rotate(-2deg); }
-        .pic-3 { width: 150px; height: 180px; transform: rotate(5deg); margin-top: -20px; }
-        .pic-4 { width: 140px; height: 170px; transform: rotate(-5deg); margin-top: 10px; }
+        .film-frame:hover img {
+            filter: grayscale(0%) contrast(110%) brightness(100%);
+        }
+
+        .pic-main { width: 320px; height: 200px; transform: rotate(-1deg); }
+        .pic-1 { width: 140px; height: 180px; transform: rotate(2deg); margin-top: 20px; }
+        .pic-2 { width: 150px; height: 190px; transform: rotate(-2deg); }
+        .pic-3 { width: 140px; height: 170px; transform: rotate(3deg); margin-top: -10px; }
+        .pic-4 { width: 130px; height: 160px; transform: rotate(-3deg); margin-top: 15px; }
 
         .letter-section {
-            width: 100%;
-            max-width: 600px;
-            z-index: 10;
+            width: 90%;
+            max-width: 500px;
             display: flex;
             flex-direction: column;
-            background: rgba(7, 25, 49, 0.6);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid #c1121f;
-            box-shadow: 0 0 20px rgba(193, 18, 31, 0.2);
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 40px 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .letter-text {
             width: 100%;
-            font-size: 2rem;
-            line-height: 1.5;
-            color: #fca311;
+            font-size: 1.8rem;
+            line-height: 1.6;
+            color: #cbd5e1;
             text-align: center;
+            font-weight: 400;
         }
 
-        .click-spark {
+        .ripple {
             position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: #c1121f;
+            border: 1px solid rgba(220, 38, 38, 0.4);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            animation: sparkFade 0.6s ease-out forwards;
+            animation: rippleEffect 0.8s ease-out forwards;
             pointer-events: none;
             z-index: 100;
-            box-shadow: 0 0 15px #fca311;
         }
 
-        @keyframes sparkFade {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(2.5); }
+        @keyframes rippleEffect {
+            0% { width: 0; height: 0; opacity: 1; border-width: 2px; }
+            100% { width: 80px; height: 80px; opacity: 0; border-width: 1px; }
         }
 
         #bg-music {
@@ -196,11 +222,14 @@
 </head>
 <body>
 
+    <div class="city-lights"></div>
+    <div class="rain-overlay"></div>
+
     <div id="fake-youtube" onclick="startSurprise()">
         <div class="thumbnail-container">
             <div class="play-btn"></div>
         </div>
-        <div class="video-title">nhạc thư giãn</div>
+        <div class="video-title">night walk in the city</div>
     </div>
 
     <div id="main-screen">
@@ -236,13 +265,14 @@
 
     <script>
         const popSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+        popSound.volume = 0.3;
 
         function startSurprise() {
             document.getElementById('fake-youtube').style.display = 'none';
             document.getElementById('main-screen').style.display = 'flex';
             
             const music = document.getElementById('bg-music');
-            music.volume = 0.5;
+            music.volume = 0.4;
             music.play();
         }
 
@@ -250,15 +280,15 @@
             popSound.currentTime = 0;
             popSound.play();
 
-            const sparkEl = document.createElement('div');
-            sparkEl.className = 'click-spark';
-            sparkEl.style.left = e.clientX + 'px';
-            sparkEl.style.top = e.clientY + 'px';
-            document.body.appendChild(sparkEl);
+            const rippleEl = document.createElement('div');
+            rippleEl.className = 'ripple';
+            rippleEl.style.left = e.clientX + 'px';
+            rippleEl.style.top = e.clientY + 'px';
+            document.body.appendChild(rippleEl);
 
             setTimeout(() => {
-                sparkEl.remove();
-            }, 600);
+                rippleEl.remove();
+            }, 800);
         });
     </script>
 </body>
